@@ -1,0 +1,12 @@
+apt-install(1) -- Update APT cache and install packages with progress GUI
+=========================================================================
+
+## SYNOPSIS
+
+`apt-install` <package> [<package> ...]
+
+## DESCRIPTION
+
+apt-install does the same like `sudo apt-get update && sudo apt-get install <package>`,
+but with a nice GUI progress bar.
+

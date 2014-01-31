@@ -1,0 +1,12 @@
+Package: apt-install
+Version: 1
+Priority: optional
+Section: misc
+Architecture: all
+Maintainer: Schlomo Schapiro <schlomo+packaging@schapiro.org>
+Depends: python, python-aptdaemon, python-aptdaemon.gtk3widgets, python-gi
+Description: Aptdaemon client to install packages with progress GUI
+ Update APT cache and install packages given on command line
+ with a progress GUI.
+ .
+ See http://blog.schlomo.schapiro.org/2014/01/apt-install.html
