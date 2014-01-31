@@ -1,5 +1,5 @@
 Package: apt-install
-Version: 1
+Version: 2
 Priority: optional
 Section: misc
 Architecture: all

@@ -31,9 +31,6 @@ def on_error(error):
     dia.hide()
 
 def on_finished_update(trans, exit):
-    if exit != "exit-success":
-        loop.quit()
-        sys.exit(1)
     GLib.timeout_add(200,do_install)
     return True
 
