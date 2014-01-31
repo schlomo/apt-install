@@ -11,3 +11,8 @@ Usage:
 ```
 $ apt-install.py <package-name> [...]
 ```
+
+Building & Installation
+-----------------------
+
+Simply run `make` to create a DEB package in `out/`. You will need ronn to build the man page.
