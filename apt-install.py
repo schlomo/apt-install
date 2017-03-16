@@ -1,10 +1,13 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 One-step update apt cache and install packages
 """
 # based on http://pythonhosted.org/aptdaemon/dbus.html and on http://bazaar.launchpad.net/~aptdaemon-developers/aptdaemon/main/view/head:/gtk3-demo.py
 import sys
 
+import gi
+gi.require_version('Gdk', '3.0')
+gi.require_version('Gtk', '3.0')
 from gi.repository import GLib
 
 
@@ -40,7 +43,7 @@ def on_finished_update(trans, exit):
 def do_update():
     trans_update = aptclient.update_cache()
     trans_update.connect("finished",on_finished_update)
-    
+
     dia = AptProgressDialog(trans_update)
     dia.run(close_on_finished=True, show_error=True,
             reply_handler=lambda: True,
@@ -63,7 +66,7 @@ def do_install():
                     error_handler=on_error,
                     )
     return False
-    
+
 
 if __name__ == "__main__":
     packages = sys.argv[1:]
@@ -72,6 +75,8 @@ if __name__ == "__main__":
         loop.run()
     else:
         print("""Usage: %s <package> [...]
+Update APT cache and install given packages.
+
 Licensed under the GNU General Public License, see http://www.gnu.org/licenses/gpl.html
 Written by Schlomo Schapiro, see https://github.com/schlomo/apt-install""" % sys.argv[0])
         sys.exit(1)
