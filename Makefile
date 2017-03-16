@@ -1,30 +1,34 @@
-DPKG=dpkg
-DPKG_OPTS=-b
-.PHONY: info repo deb
+.PHONY: all build test install clean deb repo
+PACKAGE=apt-install
+SHELL=bash
 
-info: deb
-	dpkg-deb -I out/*_all.deb
-	dpkg-deb -c out/*_all.deb
+all: build
 
-deb:	clean
-	rm -Rf build
-	mkdir -p out build/usr/bin
-	install -m 0755 apt-install.py build/usr/bin/apt-install
-	cp -r DEBIAN build
-	mkdir -p build/usr/share/doc/apt-install build/usr/share/man/man1
-	ronn --pipe --date=$(shell date +%F) --roff apt-install.1.ronn | gzip -9 >build/usr/share/man/man1/apt-install.1.gz
-	mv build/DEBIAN/copyright build/usr/share/doc/apt-install/copyright
-	git log | gzip -9 >build/usr/share/doc/apt-install/changelog.gz
-	chmod -R g-w build
-	fakeroot ${DPKG} ${DPKG_OPTS} build out
-	rm -Rf build
-	lintian -i out/*_all.deb
-	git add -A
+build:
+	@echo No build required
 
-repo: deb
-	../putinrepo.sh out/*_all.deb
+release:
+	gbp dch --full --release --distribution stable --auto --git-author --commit
+
+test:
+	@echo No tests yet, please contribute some.
+
+install:
+	mkdir -p $(DESTDIR)/usr/bin $(DESTDIR)/usr/share/man/man1
+	install -m 0755 apt-install.py $(DESTDIR)/usr/bin/apt-install
+	ronn --pipe <apt-install.1.ronn | gzip -9 > $(DESTDIR)/usr/share/man/man1/apt-install.1.gz
 
 clean:
-	rm -fr out build
+	rm -Rf debian/$(PACKAGE)* debian/files out/*
 
+deb: clean
+	debuild -i -us -uc -b --lintian-opts --profile debian
+	mkdir -p out
+	mv ../$(PACKAGE)*.{deb,build,changes} out/
+	dpkg -I out/*.deb
+	dpkg -c out/*.deb
 
+repo:
+	../putinrepo.sh out/*.deb
+
+# vim: set ts=4 sw=4 tw=0 noet :
