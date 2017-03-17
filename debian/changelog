@@ -1,3 +1,9 @@
+apt-install (21) stable; urgency=medium
+
+  * Fix off-by-one for release version
+
+ -- Schlomo Schapiro <schlomo+apt-install@schapiro.org>  Fri, 17 Mar 2017 10:40:17 +0100
+
 apt-install (19) stable; urgency=medium
 
   * Fix file uploading
