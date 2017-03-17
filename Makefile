@@ -1,7 +1,7 @@
-.PHONY: all build test install clean deb repo
+.PHONY: all build test install clean commit-release release deb repo
 PACKAGE=apt-install
 SHELL=bash
-VERSION=$(shell git rev-list HEAD --count --no-merges)
+VERSION := $(shell git rev-list HEAD --count --no-merges)
 
 all: build
 
