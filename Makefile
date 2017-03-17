@@ -1,14 +1,23 @@
 .PHONY: all build test install clean deb repo
 PACKAGE=apt-install
 SHELL=bash
+VERSION=$(shell git rev-list HEAD --count --no-merges)
 
 all: build
 
 build:
 	@echo No build required
 
-release:
-	gbp dch --full --release --distribution stable --auto --git-author --commit
+commit-release:
+	gbp dch --full --release --new-version=$(VERSION) --distribution stable --auto --git-author --commit
+
+release: commit-release deb
+	@latest_tag=$$(git describe --tags `git rev-list --tags --max-count=1`); \
+	comparison="$$latest_tag..HEAD"; \
+	if [ -z "$$latest_tag" ]; then comparison=""; fi; \
+	changelog=$$(git log $$comparison --oneline --no-merges --reverse); \
+	github-release schlomo/$(PACKAGE) v$(VERSION) "$$(git rev-parse --abbrev-ref HEAD)" "**Changelog**<br/>$$changelog" 'out/*.debx'; \
+	git pull
 
 test:
 	@echo No tests yet, please contribute some.
