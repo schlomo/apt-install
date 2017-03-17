@@ -15,4 +15,7 @@ $ apt-install.py <package-name> [...]
 Building & Installation
 -----------------------
 
-Simply run `make` to create a DEB package in `out/`. You will need ronn to build the man page.
+Simply run `make` to create a DEB package in `out/`.
+Build Requirements are debuild(1), git-dch(1) and [ronn](http://rtomayko.github.io/ronn/). For Ubuntu/Debian install the `devscripts git-buildpackage ruby-ronn make debhelper` packages.
+
+To create a release [github-release](https://github.com/c4milo/github-release) needs to be in your PATH.
