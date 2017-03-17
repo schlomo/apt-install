@@ -1,3 +1,9 @@
+apt-install (15) stable; urgency=medium
+
+  * Use github-release to create release on GH
+
+ -- Schlomo Schapiro <schlomo+apt-install@schapiro.org>  Fri, 17 Mar 2017 10:26:12 +0100
+
 apt-install (10) stable; urgency=medium
 
   * Update to work with Python3 and Ubuntu 16.04.
